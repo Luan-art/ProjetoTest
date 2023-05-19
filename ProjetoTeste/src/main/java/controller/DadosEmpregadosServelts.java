@@ -15,11 +15,12 @@ public class DadosEmpregadosServelts extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public DadosEmpregadosServelts() {
+		super();
         // TODO Auto-generated constructor stub
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/employeeregister.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/detalhesUser.jsp");
 		dispatcher.forward(request, response);
 	}
 

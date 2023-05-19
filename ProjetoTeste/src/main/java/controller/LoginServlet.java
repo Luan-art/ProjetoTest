@@ -2,12 +2,14 @@ package controller;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 
 import dao.EmployeeDao;
-
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.Employee;
 
 @WebServlet("/login")
@@ -20,6 +22,8 @@ public class LoginServlet extends HttpServlet{
 
 	public LoginServlet() {
         // TODO Auto-generated constructor stub
+		
+		super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,19 +40,28 @@ public class LoginServlet extends HttpServlet{
         
         
         Employee employee = null;
+        Employee employee1 = null;
+        
         
         try {
-            employee = employeeDao.logEmployee(username, password);
+            employee = employeeDao.getUser(username);
+            employee1= employeeDao.getPassword(password);
+            
             System.out.println(employee.getUsername());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-        request.setAttribute("employee", employee);
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/employeedetails.jsp");
-		dispatcher.forward(request, response);
+        if(employee == employee1) {
+            request.setAttribute("employee", employee);
+            
+            
+            DadosEmpregadosServelts des = new DadosEmpregadosServelts();
+            
+            //des.doGet(request, response);
+        }
+    
     }
 	
 	

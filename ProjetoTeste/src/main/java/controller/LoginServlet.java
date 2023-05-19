@@ -2,13 +2,12 @@ package controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
 import dao.EmployeeDao;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import model.Employee;
 
 @WebServlet("/login")
@@ -35,17 +34,23 @@ public class LoginServlet extends HttpServlet{
 		String username = request.getParameter("login");
         String password = request.getParameter("password");
         
+        
+        Employee employee = null;
+        
         try {
-            employeeDao.getUser(username);
-            employeeDao.getPassword(password);
-
+            employee = employeeDao.logEmployee(username, password);
+            System.out.println(employee.getUsername());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/detalhesUser.jsp");
+        
+        request.setAttribute("employee", employee);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/employeedetails.jsp");
 		dispatcher.forward(request, response);
     }
+	
+	
 	
 }
